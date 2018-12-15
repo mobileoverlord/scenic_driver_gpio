@@ -11,7 +11,7 @@ dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:scenic_driver_gpio, "~> 0.1.0"}
+    {:scenic_driver_gpio, "~> 0.1"}
   ]
 end
 ```

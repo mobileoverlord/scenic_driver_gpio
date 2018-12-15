@@ -15,7 +15,6 @@ defmodule ScenicDriverGPIO do
   end
 
   defp init_gpio(map) do
-  IO.inspect map
     Enum.reduce(map, [], fn(gpio, acc) ->
       pin = gpio.pin || raise "No pin was defined"
       pull_mode = gpio.pull_mode || :none
