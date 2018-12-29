@@ -16,8 +16,8 @@ defmodule ScenicDriverGPIO do
 
   defp init_gpio(map) do
     Enum.reduce(map, [], fn(gpio, acc) ->
-      pin = gpio.pin || raise "No pin was defined"
-      pull_mode = gpio.pull_mode || :none
+      pin = gpio[:pin] || raise "No pin was defined"
+      pull_mode = gpio[:pull_mode] || :not_set
 
       {:ok, gpio_ref} = GPIO.open(pin, :input)
       :ok = GPIO.set_pull_mode(gpio_ref, pull_mode)
