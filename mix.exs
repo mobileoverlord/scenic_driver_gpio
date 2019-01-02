@@ -31,7 +31,7 @@ defmodule ScenicDriverGPIO.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:circuits_gpio, github: "elixir-circuits/circuits_gpio"},
+      {:circuits_gpio, "~> 0.1"},
       {:scenic, "~> 0.9"},
       {:ex_doc, "~> 0.11", only: :dev, runtime: false}
     ]

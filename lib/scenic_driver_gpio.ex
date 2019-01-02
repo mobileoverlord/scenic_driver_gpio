@@ -22,7 +22,7 @@ defmodule ScenicDriverGPIO do
 
       {:ok, gpio_ref} = GPIO.open(pin, :input)
       :ok = GPIO.set_pull_mode(gpio_ref, pull_mode)
-      :ok = GPIO.set_edge_mode(gpio_ref, :both)
+      :ok = GPIO.set_interrupts(gpio_ref, :both)
 
       info = Map.put(gpio, :ref, gpio_ref)
       Map.put(acc, pin, info)
