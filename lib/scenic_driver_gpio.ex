@@ -8,26 +8,29 @@ defmodule ScenicDriverGPIO do
   @low 0
 
   def init(viewport, _size, config) do
-    {:ok, %{
-      gpio: init_gpio(config),
-      viewport: viewport
-    }}
+    {:ok,
+     %{
+       gpio: init_gpio(config),
+       viewport: viewport
+     }}
   end
 
-  defp init_gpio(map) do
-    Enum.reduce(map, [], fn(gpio, acc) ->
-      pin = gpio.pin || raise "No pin was defined"
-      pull_mode = gpio.pull_mode || :none
+  defp init_gpio(config) do
+    Enum.reduce(config, %{}, fn gpio, acc ->
+      pin = gpio[:pin] || raise "No pin was defined"
+      pull_mode = gpio[:pull_mode] || :not_set
 
       {:ok, gpio_ref} = GPIO.open(pin, :input)
       :ok = GPIO.set_pull_mode(gpio_ref, pull_mode)
-      :ok = GPIO.set_edge_mode(gpio_ref, :both)
-      [Map.put(gpio, :ref, gpio_ref) | acc]
+      :ok = GPIO.set_interrupts(gpio_ref, :both)
+
+      info = Map.put(gpio, :ref, gpio_ref)
+      Map.put(acc, pin, info)
     end)
   end
 
   def handle_info({:gpio, pin, _, edge}, s) do
-    gpio = Enum.find(s.gpio, & &1.pin == pin)
+    gpio = Map.get(s.gpio, pin)
 
     event =
       case edge do
