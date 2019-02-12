@@ -20,8 +20,7 @@ defmodule ScenicDriverGPIO do
       pin = gpio[:pin] || raise "No pin was defined"
       pull_mode = gpio[:pull_mode] || :not_set
 
-      {:ok, gpio_ref} = GPIO.open(pin, :input)
-      :ok = GPIO.set_pull_mode(gpio_ref, pull_mode)
+      {:ok, gpio_ref} = GPIO.open(pin, :input, pull_mode: pull_mode)
       :ok = GPIO.set_interrupts(gpio_ref, :both)
 
       info = Map.put(gpio, :ref, gpio_ref)
