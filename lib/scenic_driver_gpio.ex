@@ -28,7 +28,7 @@ defmodule ScenicDriverGPIO do
     end)
   end
 
-  def handle_info({:gpio, pin, _, edge}, s) do
+  def handle_info({:circuits_gpio, pin, _, edge}, s) do
     gpio = Map.get(s.gpio, pin)
 
     event =
